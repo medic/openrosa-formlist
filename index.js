@@ -1,4 +1,4 @@
-var expat = require('node-expat')
+var sax = require('sax')
 var crypto = require('crypto')
 var request = require('request')
 var builder = require('xmlbuilder')
@@ -91,13 +91,15 @@ function createFormList (forms, options, callback) {
   })
 
   function parse (xformStream, callback) {
-    var parser = new expat.Parser('UTF-8')
+    var parser  = sax.createStream({strict: true})
     var md5 = crypto.createHash('md5')
     var path = ''
     var meta = {}
     var hasAttachments = false
 
-    parser.on('startElement', function (tagname, attrs) {
+    parser.on("opentag", function (node) {
+      var tagname = node.name
+      var attrs = node.attributes
       if (path === options.instancePath && !meta.formID) {
         meta.formID = attrs.id || tagname
         if (attrs.version) meta.version = attrs.version
@@ -105,7 +107,7 @@ function createFormList (forms, options, callback) {
       path += '/' + tagname
     })
 
-    parser.on('endElement', function (tagname) {
+    parser.on('closetag', function (tagname) {
       var re = new RegExp('\/' + tagname + '$', 'i')
       path = path.replace(re, '')
     })
