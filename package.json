@@ -1,6 +1,6 @@
 {
   "name": "openrosa-formlist",
-  "version": "1.0.1",
+  "version": "medic/openrosa-formlist#sax-sax",
   "description": "Create a valid OpenRosa FormList of xforms see https://bitbucket.org/javarosa/javarosa/wiki/FormListAPI",
   "main": "index.js",
   "scripts": {
