@@ -83,7 +83,7 @@ function createFormList (forms, options, callback) {
       encoding: 'UTF-8'
     })
     if (results && results.length > 0) {
-        xml.ele({'#list': results})
+        xml.ele(results)
     }
     callback(null, xml.end({pretty: true}))
   })
